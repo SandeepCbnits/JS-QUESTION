@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Cart from "./Components/Cart";
+import Header from "./Components/Header/Header";
+import Products from "./Components/Products";
+import items from "./items";
 
-function App() {
+const App = () => {
+  const [products, setProducts] = useState(items);
+  const [carts, setCarts] = useState([]);
+
+  const addToCartHandler=(data)=>{
+    setCarts((privesData)=>{     
+      let oldData = [...privesData];
+      oldData.push({...data , quantity: 1})
+      return oldData;
+    })
+ 
+ }
+ const deleteHandler=(id)=>{
+console.log(id)
+setCarts((priveData)=>{
+  let oldData = [...priveData];
+  oldData.slice(0, 1)//
+  return oldData;
+})
+ }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header count={carts.length}/>
+      <Cart carts={carts} deleteHandler={deleteHandler}/>
+      <Products products={products} addToCart={addToCartHandler} deleteHandler={deleteHandler}/>
     </div>
   );
-}
+};
 
 export default App;
